@@ -12,10 +12,9 @@ import java.util.List;
 
 public class DatabaseUtil extends SQLiteAssetHelper {
 
-    private static String _DATABASE_NAME = "istilah";
+    private static String _DATABASE_NAME = "istilah.db";
     private static int _DATABASE_VERSION = 1;
 
-    private String _TABLE_NAME = "Tabel_istilah";
 
     public DatabaseUtil(Context context) {
         super(context, _DATABASE_NAME, null, _DATABASE_VERSION);
@@ -24,7 +23,7 @@ public class DatabaseUtil extends SQLiteAssetHelper {
     public List<Kamus> getAllKamus() {
         List<Kamus> kamusList = new ArrayList<Kamus>();
         // query untuk ambil semua data yang ada di dalam table
-        String query = "SELECT * FROM "+_TABLE_NAME;
+        String query = "SELECT * FROM Tabel_istilah";
         // masukkan query ke dalam cursor
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery(query, null);
@@ -41,7 +40,7 @@ public class DatabaseUtil extends SQLiteAssetHelper {
                     kamus = new Kamus();
                     // masukkan gambar ke entity
                     kamus.setGambar(cursor.getBlob(cursor.getColumnIndex("keterangan gambar")));
-                    // masukan istilah ke entity
+                    // masukan istilah.db ke entity
                     kamus.setIstilah(cursor.getString(cursor.getColumnIndex("istilah")));
                     // masukan arti/penjelasan ke entity
                     kamus.setArti(cursor.getString(cursor.getColumnIndex("arti")));

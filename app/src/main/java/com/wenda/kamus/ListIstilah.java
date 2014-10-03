@@ -1,12 +1,14 @@
 package com.wenda.kamus;
 
-import android.app.ListFragment;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.wenda.kamus.util.DatabaseUtil;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 public class ListIstilah extends ListFragment {
     int layout;
+    IstilahSelectListener selectListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,5 +53,37 @@ public class ListIstilah extends ListFragment {
         // masukan data ke dalam adapter listview
         setListAdapter(new ArrayAdapter<String>(getActivity(), layout, istilahList));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        selectListener.onIstilahSelected(position);
+
+        // beri highlighted ketika user memilih, hanya berlaku ketika di table
+        getListView().setItemChecked(position, true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getFragmentManager().findFragmentById(R.id.fragment2) != null) {
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            selectListener = (IstilahSelectListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + "");
+        }
+    }
+
+    public interface IstilahSelectListener {
+        public void onIstilahSelected(int position);
     }
 }

@@ -3,6 +3,9 @@ package com.wenda.kamus;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 public class MyActivity extends FragmentActivity implements ListIstilah.IstilahSelectListener {
 
@@ -17,11 +20,30 @@ public class MyActivity extends FragmentActivity implements ListIstilah.IstilahS
             }
 
             // buat instance dari fragment istilah
-            ListIstilah listIstilah = new ListIstilah();
+            final ListIstilah listIstilah = new ListIstilah();
 
             listIstilah.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, listIstilah).commit();
+
+            final EditText editText = (EditText) findViewById(R.id.editText);
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    String filter = editText.getText().toString().trim();
+                    listIstilah.updateSetAdapter(filter);
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
         }
     }
 

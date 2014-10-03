@@ -19,6 +19,9 @@ public class ListIstilah extends ListFragment {
     int layout;
     IstilahSelectListener selectListener;
 
+    ArrayAdapter<String> adapter;
+    List<String> istilahList = new ArrayList<String>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,6 @@ public class ListIstilah extends ListFragment {
         // panggil database util
         DatabaseUtil database = new DatabaseUtil(getActivity());
         // buat array string untuk adapternya
-        List<String> istilahList = new ArrayList<String>();
         // loop semua data yang ada
         // dan masukkan ke array string
         for (Kamus kamus : database.getAllKamus()) {
@@ -49,9 +51,10 @@ public class ListIstilah extends ListFragment {
             istilahList.add(kamus.getIstilah());
         }
 
+        adapter = new ArrayAdapter<String>(getActivity(), layout, istilahList);
+        setListAdapter(adapter);
 
         // masukan data ke dalam adapter listview
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, istilahList));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -61,6 +64,11 @@ public class ListIstilah extends ListFragment {
 
         // beri highlighted ketika user memilih, hanya berlaku ketika di table
         getListView().setItemChecked(position, true);
+    }
+
+    public void updateSetAdapter(String filter) {
+        adapter.getFilter().filter(filter);
+        setListAdapter(adapter);
     }
 
     @Override

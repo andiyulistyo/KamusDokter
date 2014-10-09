@@ -19,8 +19,8 @@ public class ListIstilahAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Kamus> kamusList;
 
-    public ListIstilahAdapter(Context mContext, List<Kamus> kamusList) {
-        this.mContext = mContext;
+    public ListIstilahAdapter(Context context, List<Kamus> kamusList) {
+        this.mContext = context;
         this.kamusList = kamusList;
         this.inflater = LayoutInflater.from(mContext);
     }

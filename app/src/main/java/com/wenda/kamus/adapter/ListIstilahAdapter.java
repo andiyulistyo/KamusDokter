@@ -1,6 +1,7 @@
 package com.wenda.kamus.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +53,8 @@ public class ListIstilahAdapter extends BaseAdapter {
             holder.textViewPenjelasan = (TextView) view.findViewById(R.id.textViewPenjelasan);
         } else holder = (ViewHolder) view.getTag();
 
-        holder.textViewPenjelasan.setText(kamusList.get(position).getArti());
-        holder.textViewIstilah.setText(kamusList.get(position).getIstilah());
+        holder.textViewIstilah.setText(Html.fromHtml(" " + kamusList.get(position).getArti() + " :  " + kamusList.get(position).getIstilah()));
+//        holder.textViewIstilah.setText(kamusList.get(position).getIstilah());
 
         return view;
     }

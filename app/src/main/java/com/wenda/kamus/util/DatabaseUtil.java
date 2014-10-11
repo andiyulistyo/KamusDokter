@@ -51,7 +51,7 @@ public class DatabaseUtil extends SQLiteAssetHelper {
                 while (cursor.moveToNext());
             }
         } // setelah semua proses berakhir jangan lupa untuk menutup koneksi ke database
-            finally {
+        finally {
             database.close();
         }
 

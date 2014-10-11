@@ -59,6 +59,7 @@ public class ListIstilahAdapter extends BaseAdapter {
         return view;
     }
 
+
     class ViewHolder {
         TextView textViewIstilah, textViewPenjelasan;
     }

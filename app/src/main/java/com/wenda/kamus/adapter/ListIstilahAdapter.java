@@ -53,7 +53,7 @@ public class ListIstilahAdapter extends BaseAdapter {
             holder.textViewPenjelasan = (TextView) view.findViewById(R.id.textViewPenjelasan);
         } else holder = (ViewHolder) view.getTag();
 
-        holder.textViewIstilah.setText(Html.fromHtml(" " + kamusList.get(position).getIstilah() + " :  " + kamusList.get(position).getArti()));
+        holder.textViewIstilah.setText(Html.fromHtml("<b> " + kamusList.get(position).getIstilah() + " :</b>  " + kamusList.get(position).getArti()));
 //        holder.textViewIstilah.setText(kamusList.get(position).getIstilah());
 
         return view;

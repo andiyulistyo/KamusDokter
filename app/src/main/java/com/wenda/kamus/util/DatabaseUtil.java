@@ -23,7 +23,7 @@ public class DatabaseUtil extends SQLiteAssetHelper {
     public List<Kamus> getAllKamus() {
         List<Kamus> kamusList = new ArrayList<Kamus>();
         // query untuk ambil semua data yang ada di dalam table
-        String query = "SELECT * FROM Tabel_istilah";
+        String query = "SELECT * FROM Tabel_istilah order by istilah asc";
         // masukkan query ke dalam cursor
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery(query, null);

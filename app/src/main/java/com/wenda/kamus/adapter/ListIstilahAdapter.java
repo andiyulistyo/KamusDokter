@@ -1,27 +1,35 @@
 package com.wenda.kamus.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wenda.kamus.Kamus;
 import com.wenda.kamus.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ListIstilahAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater inflater;
     private List<Kamus> kamusList;
+    private List<Kamus> filter;
 
-    public ListIstilahAdapter(Context context, List<Kamus> kamusList) {
+    public ListIstilahAdapter(Context context, List<Kamus> kamusListt) {
         this.mContext = context;
-        this.kamusList = kamusList;
+        this.kamusList = kamusListt;
+        this.filter = new ArrayList<Kamus>();
+        this.filter.addAll(kamusList);
         this.inflater = LayoutInflater.from(mContext);
     }
 
@@ -50,18 +58,34 @@ public class ListIstilahAdapter extends BaseAdapter {
             view.setTag(holder);
 
             holder.textViewIstilah = (TextView) view.findViewById(R.id.textViewIstilah);
-            holder.textViewPenjelasan = (TextView) view.findViewById(R.id.textViewPenjelasan);
+            holder.imageView = (ImageView) view.findViewById(R.id.imageView);
         } else holder = (ViewHolder) view.getTag();
 
         holder.textViewIstilah.setText(Html.fromHtml("<b> " + kamusList.get(position).getIstilah() + " :</b>  " + kamusList.get(position).getArti()));
-//        holder.textViewIstilah.setText(kamusList.get(position).getIstilah());
 
         return view;
     }
 
+    public void cari(String cari) {
+        cari = cari.toLowerCase(Locale.getDefault());
+        kamusList.clear();
+        if (cari.length() == 0) {
+            kamusList.addAll(filter);
+        } else {
+            for (Kamus kamus : filter) {
+                if (kamus.getIstilah().toLowerCase(Locale.getDefault()).contains(cari)) {
+                    Log.i(">>>>>", kamus.getIstilah()+" = "+cari);
+                    kamusList.add(kamus);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
     class ViewHolder {
-        TextView textViewIstilah, textViewPenjelasan;
+        TextView textViewIstilah;
+        ImageView imageView;
     }
 
 }

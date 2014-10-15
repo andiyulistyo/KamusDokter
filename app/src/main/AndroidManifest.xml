@@ -11,7 +11,7 @@
         <activity
             android:name="com.wenda.kamus.MyActivity"
             android:label="@string/app_name"
-            android:theme="@style/ShowcaseView.Light">
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 

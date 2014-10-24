@@ -1,7 +1,7 @@
 package com.wenda.kamus.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +24,13 @@ public class ListIstilahAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<Kamus> kamusList;
     private List<Kamus> filter;
+
+    private String[] color = {"FFE47A48",
+            "FFDBBF10",
+            "FFEB9B2A",
+            "FF5A94B5",
+            "FFDD5956",
+            "FF6EB562"};
 
     public ListIstilahAdapter(Context context, List<Kamus> kamusListt) {
         this.mContext = context;
@@ -63,6 +70,12 @@ public class ListIstilahAdapter extends BaseAdapter {
 
         holder.textViewIstilah.setText(Html.fromHtml("<b> " + kamusList.get(position).getIstilah() + " :</b>  " + kamusList.get(position).getArti()));
 
+        int randomNum = (int) (Math.random() * ((5) + 1));
+
+        if (kamusList.get(position).getGambar() != null)
+            holder.imageView.setBackgroundColor(Color.parseColor("#" + color[randomNum]));
+//        else holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+
         return view;
     }
 
@@ -74,7 +87,7 @@ public class ListIstilahAdapter extends BaseAdapter {
         } else {
             for (Kamus kamus : filter) {
                 if (kamus.getIstilah().toLowerCase(Locale.getDefault()).contains(cari)) {
-                    Log.i(">>>>>", kamus.getIstilah()+" = "+cari);
+                    Log.i(">>>>>", kamus.getIstilah() + " = " + cari);
                     kamusList.add(kamus);
                 }
             }

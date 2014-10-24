@@ -12,7 +12,6 @@ import com.wenda.kamus.adapter.ListIstilahAdapter;
 import com.wenda.kamus.util.DatabaseUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 public class MyActivity extends ListActivity {
 
@@ -34,6 +33,7 @@ public class MyActivity extends ListActivity {
                 .build();
 
         final EditText editTextCari = (EditText) findViewById(R.id.editTextCari);
+
         editTextCari.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

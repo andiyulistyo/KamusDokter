@@ -2,9 +2,18 @@ package com.wenda.kamus;
 
 public class Kamus {
 
+    private int id;
     private String istilah;
     private String arti;
     private byte[] gambar;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getIstilah() {
         return istilah;

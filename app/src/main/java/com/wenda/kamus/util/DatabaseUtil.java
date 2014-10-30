@@ -44,6 +44,8 @@ public class DatabaseUtil extends SQLiteAssetHelper {
                     kamus.setIstilah(cursor.getString(cursor.getColumnIndex("istilah")));
                     // masukan arti/penjelasan ke entity
                     kamus.setArti(cursor.getString(cursor.getColumnIndex("arti")));
+                    // masukkan id ke entity
+                    kamus.setId(cursor.getInt(cursor.getColumnIndex("id")));
 
                     // masukkan entity ke dalam list
                     kamusList.add(kamus);
@@ -57,5 +59,20 @@ public class DatabaseUtil extends SQLiteAssetHelper {
 
         // return
         return kamusList;
+    }
+
+    public Kamus getById(int id) {
+        String query = "SELECT * FROM Tabel_istilah WHERE id =" + id;
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        Kamus kamus = null;
+        if (cursor != null & cursor.moveToNext()) {
+            kamus = new Kamus();
+            kamus.setGambar(cursor.getBlob(cursor.getColumnIndex("keterangan gambar")));
+            kamus.setIstilah(cursor.getString(cursor.getColumnIndex("istilah")));
+        }
+        return kamus;
     }
 }

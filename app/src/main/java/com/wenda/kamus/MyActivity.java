@@ -1,13 +1,18 @@
 package com.wenda.kamus;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.wenda.kamus.adapter.ListIstilahAdapter;
 import com.wenda.kamus.util.DatabaseUtil;
 
@@ -21,16 +26,34 @@ public class MyActivity extends ListActivity {
         setContentView(R.layout.activity_my);
 
         DatabaseUtil database = new DatabaseUtil(this);
+
         List<Kamus> allKamus = database.getAllKamus();
+
         final ListIstilahAdapter adapter = new ListIstilahAdapter(this, allKamus);
+
         setListAdapter(adapter);
 
-        new ShowcaseView.Builder(this)
-                .setTarget(new ViewTarget(R.id.editTextCari, this))
-                .setContentTitle("Cari Istilah")
-                .setContentText("Jika ingin cepet mencari makan bisa langsung ketik disini saja")
-                .hideOnTouchOutside()
-                .build();
+        ListView listView = getListView();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView id = (TextView) view.findViewById(R.id.textViewId);
+
+                // ambil variable gambar
+                ImageView image = (ImageView) view.findViewById(R.id.imageView);
+                // cek apakah gambar ditampilkan atau tidak
+                // jka di tampilkan maka ada gambar
+                // jika tidak maka tidak ada gambar
+                // ada gambar
+                if (image.getVisibility() == View.VISIBLE) {
+                    Intent intent = new Intent(getApplicationContext(), GambarActivity.class);
+                    intent.putExtra("id", Integer.valueOf(String.valueOf(id.getText().toString())));
+                    startActivity(intent);
+                } else
+                    Toast.makeText(getApplicationContext(), "Tidak ada gambar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         final EditText editTextCari = (EditText) findViewById(R.id.editTextCari);
 

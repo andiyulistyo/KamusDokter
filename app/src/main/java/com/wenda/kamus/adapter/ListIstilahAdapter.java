@@ -66,15 +66,22 @@ public class ListIstilahAdapter extends BaseAdapter {
 
             holder.textViewIstilah = (TextView) view.findViewById(R.id.textViewIstilah);
             holder.imageView = (ImageView) view.findViewById(R.id.imageView);
+            holder.textViewId = (TextView) view.findViewById(R.id.textViewId);
         } else holder = (ViewHolder) view.getTag();
 
         holder.textViewIstilah.setText(Html.fromHtml("<b> " + kamusList.get(position).getIstilah() + " :</b>  " + kamusList.get(position).getArti()));
+        holder.textViewId.setText(kamusList.get(position).getId() + "");
 
         int randomNum = (int) (Math.random() * ((5) + 1));
 
-        if (kamusList.get(position).getGambar() != null)
+        if (kamusList.get(position).getGambar() != null) {
+            holder.imageView.setVisibility(View.VISIBLE);
             holder.imageView.setBackgroundColor(Color.parseColor("#" + color[randomNum]));
-//        else holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+        } else {
+            holder.imageView.setVisibility(View.GONE);
+            holder.imageView.setBackgroundColor(Color.parseColor("#ffffffff"));
+
+        }
 
         return view;
     }
@@ -95,9 +102,8 @@ public class ListIstilahAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-
     class ViewHolder {
-        TextView textViewIstilah;
+        TextView textViewIstilah, textViewId;
         ImageView imageView;
     }
 
